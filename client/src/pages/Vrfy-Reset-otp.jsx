@@ -113,7 +113,7 @@ const handleSubmit = (e) => {
       setResending(true);
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/forgetPass",
+        "/api/auth/forgetPass",
         {
           email,
         },

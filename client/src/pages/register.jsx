@@ -42,7 +42,7 @@ const handleRegister = async (e) => {
     setLoading(true);
 
     const { data } = await axios.post(
-      "http://localhost:5000/api/auth/register",
+      "/api/auth/register",
       formData,
       {
         withCredentials: true,

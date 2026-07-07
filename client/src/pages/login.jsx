@@ -41,7 +41,7 @@ function Login() {
       setLoading(true);
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "/api/auth/login",
         formData,
         {
           withCredentials: true,

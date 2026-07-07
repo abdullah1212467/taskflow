@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 import "../css/create-task.css";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "/api",
   withCredentials: true,
 });
 

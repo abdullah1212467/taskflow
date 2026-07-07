@@ -41,7 +41,7 @@ api.interceptors.response.use(
       try {
 
         const { data } = await axios.post(
-          "http://localhost:5000/api/auth/refresh-token",
+          "/api/auth/refresh-token",
           {},
           {
             withCredentials: true,

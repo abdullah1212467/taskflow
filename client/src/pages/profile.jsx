@@ -148,7 +148,7 @@ function Profile() {
               user.profilePicture ?
 
               <img
-                src={`http://localhost:5000/uploads/${user.profilePicture}`}
+                src={`/uploads/${user.profilePicture}`}
                 alt="Profile"
               />
 
@@ -211,7 +211,7 @@ function Profile() {
             user.profilePicture ?
 
             <img
-              src={`http://localhost:5000/uploads/${user.profilePicture}`}
+              src={`/uploads/${user.profilePicture}`}
               alt="Profile"
             />
 

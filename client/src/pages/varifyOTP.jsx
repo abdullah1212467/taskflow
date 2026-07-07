@@ -91,7 +91,7 @@ function VerifyOtp() {
       setLoading(true);
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/verify-email",
+        "/api/auth/verify-email",
         {
           email,
           otp,
