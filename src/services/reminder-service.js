@@ -29,13 +29,17 @@ const scheduleReminder = async (task) => {
 };
 
 const updateReminder = async (task) => {
+  console.log("Updating reminder...");
+
   const oldJob = await reminderQueue.getJob(task.jobId);
 
   if (oldJob) {
+    console.log("Old Job Found:", oldJob.id);
     await oldJob.remove();
+  } else {
+    console.log("Old Job NOT Found");
   }
 
-  // Schedule a new reminder
   await scheduleReminder(task);
 };
 

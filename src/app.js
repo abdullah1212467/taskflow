@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/auth-route.js")
 const userRouter = require("./routes/user_route.js")
 const taskRoutes = require("./routes/task-route.js");
+const notificationRouter = require("./routes/notification-routes.js");
+
 
 
 
@@ -28,6 +30,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/Profile", userRouter);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/notifications", notificationRouter);
 
 app.get("/", (req, res) => {
   res.json({

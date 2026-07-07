@@ -1,0 +1,290 @@
+/* ===========================
+        NOTIFICATION PAGE
+=========================== */
+
+.notification-page{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+
+/* ===========================
+        HEADER
+=========================== */
+
+.notification-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.notification-header h1{
+    color:#fff;
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.notification-header p{
+    color:#94a3b8;
+    line-height:26px;
+}
+
+/* ===========================
+        HEADER BUTTONS
+=========================== */
+
+.notification-actions{
+    display:flex;
+    gap:15px;
+}
+
+.read-btn,
+.clear-btn{
+    height:48px;
+    padding:0 22px;
+    border:none;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    cursor:pointer;
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.read-btn{
+    background:#4f46e5;
+}
+
+.read-btn:hover{
+    background:#4338ca;
+}
+
+.clear-btn{
+    background:#dc2626;
+}
+
+.clear-btn:hover{
+    background:#b91c1c;
+}
+
+/* ===========================
+        LIST
+=========================== */
+
+.notification-list{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+}
+
+/* ===========================
+        CARD
+=========================== */
+
+.notification-card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    padding:24px;
+    display:flex;
+    gap:20px;
+    transition:.3s;
+}
+
+.notification-card:hover{
+    transform:translateY(-4px);
+    border-color:#4f46e5;
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+/* Unread */
+
+.notification-card.unread{
+    border-left:5px solid #4f46e5;
+}
+
+/* ===========================
+        ICON
+=========================== */
+
+.notification-icon{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#1e293b;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#38bdf8;
+    flex-shrink:0;
+}
+
+/* ===========================
+        CONTENT
+=========================== */
+
+.notification-content{
+    flex:1;
+}
+
+.notification-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:12px;
+}
+
+.notification-top h3{
+    color:#fff;
+    font-size:20px;
+}
+
+/* New Badge */
+
+.new-badge{
+    background:#22c55e;
+    color:#fff;
+    font-size:12px;
+    padding:5px 12px;
+    border-radius:30px;
+    font-weight:600;
+}
+
+.notification-content p{
+    color:#94a3b8;
+    line-height:28px;
+    margin-bottom:20px;
+}
+
+/* ===========================
+        FOOTER
+=========================== */
+
+.notification-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+/* Time */
+
+.time{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:#94a3b8;
+    font-size:14px;
+}
+
+/* ===========================
+        TYPE BADGES
+=========================== */
+
+.type{
+    color:#fff;
+    padding:7px 16px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+}
+
+/* Reminder */
+
+.type.reminder{
+    background:#3b82f6;
+}
+
+/* Completed */
+
+.type.completed{
+    background:#22c55e;
+}
+
+/* Due Today */
+
+.type.due-today{
+    background:#f59e0b;
+}
+
+/* Overdue */
+
+.type.overdue{
+    background:#ef4444;
+}
+
+/* System */
+
+.type.system{
+    background:#8b5cf6;
+}
+
+/* ===========================
+        RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+.notification-header{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.notification-actions{
+    width:100%;
+    flex-direction:column;
+}
+
+.read-btn,
+.clear-btn{
+    width:100%;
+}
+
+.notification-card{
+    flex-direction:column;
+}
+
+.notification-icon{
+    margin:0 auto;
+}
+
+.notification-top{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.notification-footer{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+}
+
+@media(max-width:500px){
+
+.notification-header h1{
+    font-size:28px;
+}
+
+.notification-card{
+    padding:20px;
+}
+
+.notification-top h3{
+    font-size:18px;
+}
+
+.notification-content p{
+    font-size:14px;
+}
+
+}

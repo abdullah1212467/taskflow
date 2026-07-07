@@ -3,6 +3,7 @@ const redisConnection = require("../config/redis_config.js");
 const Task = require("../models/task_model.js")
 const User = require("../models/user_Model.js")
 const sendEmail = require("../utils/sendEmail.js")
+const Notification = require("../models/notification_model.js")
 
 const reminderWorker = new Worker(
   "reminderQueue",
@@ -122,6 +123,12 @@ Stay productive and complete your task on time. 🚀
       await task.save();
 
       console.log("✅ Reminder Email Sent");
+      await Notification.create({
+  user: task.createdBy,
+  title: "Reminder Sent",
+  message: `Reminder email sent for "${task.title}".`,
+  type: "reminder",
+});
     } catch (error) {
       console.log("❌ Worker Error:", error.message);
     }

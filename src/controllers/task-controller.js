@@ -3,7 +3,7 @@ const reminderQueue = require("../queue/reminder-queue.js");
 const  {scheduleReminder ,updateReminder , removeReminder} = require("../services/reminder-service.js");
 const RedisClient = require("../config/redis_config.js")
 const { clearTaskCache } = require("../utils/cache.js");
-
+const Notification = require("../models/notification_model.js")
 const createTask = async (req, res) => {
   try {
     const {
@@ -37,6 +37,12 @@ const createTask = async (req, res) => {
     
 await scheduleReminder(task);
 await clearTaskCache(req.user._id);
+await Notification.create({
+  user: req.user._id,
+  title: "Task Created",
+  message: `"${task.title}" has been created successfully.`,
+  type: "task_created",
+});
 
     return res.status(201).json({
       success: true,
@@ -101,11 +107,12 @@ const getMyTasks = async (req, res) => {
 const cacheKey = `tasks:${req.user._id}:${JSON.stringify(req.query)}`;
 const cachedTasks = await RedisClient.get(cacheKey);
     if (cachedTasks) {
-    return res.status(200).json({
-        success: true,
-        tasks: JSON.parse(cachedTasks),
-        source: "Redis Cache"
-    });
+   const cached = JSON.parse(cachedTasks);
+
+return res.status(200).json({
+  source: "Redis Cache",
+  ...cached,
+});
 }
 
   const tasks = await Task.find(filter)
@@ -145,6 +152,83 @@ return res.status(200).json({
 
   }
 };
+
+
+const getDashboard = async (req, res) => {
+  try {
+
+    const userId = req.user._id;
+
+    const totalTasks = await Task.countDocuments({
+      createdBy: userId,
+      isDeleted: false,
+    });
+
+    const completedTasks = await Task.countDocuments({
+      createdBy: userId,
+      isDeleted: false,
+      status: "Completed",
+    });
+
+    const pendingTasks = await Task.countDocuments({
+      createdBy: userId,
+      isDeleted: false,
+      status: "Pending",
+    });
+
+    const today = new Date();
+
+    const overdueTasks = await Task.countDocuments({
+      createdBy: userId,
+      isDeleted: false,
+      status: "Pending",
+      dueDate: {
+        $lt: today,
+      },
+    });
+
+    const recentTasks = await Task.find({
+      createdBy: userId,
+      isDeleted: false,
+    })
+      .sort("-createdAt")
+      .limit(5)
+      .select(
+        "title priority status dueDate createdAt"
+      );
+
+    return res.status(200).json({
+      success: true,
+
+      dashboard: {
+
+        totalTasks,
+
+        completedTasks,
+
+        pendingTasks,
+
+        overdueTasks,
+
+        recentTasks,
+
+      },
+
+    });
+
+  } catch (error) {
+
+    return res.status(500).json({
+
+      success: false,
+
+      message: error.message,
+
+    });
+
+  }
+};
+
 
 const getSingleTask = async (req, res) => {
   try {
@@ -281,6 +365,12 @@ const deleteTask = async (req, res) => {
     task.isDeleted = true;
 
     await task.save();
+    await Notification.create({
+  user: req.user._id,
+  title: "Task Deleted",
+  message: `"${task.title}" has been moved to Trash.`,
+  type: "task_deleted",
+});
 
     return res.status(200).json({
       success: true,
@@ -319,6 +409,61 @@ const getDeletedTasks = async (req, res) => {
   }
 };
 
+const completeTask = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+
+    const task = await Task.findOne({
+      _id: id,
+      createdBy: req.user._id,
+      isDeleted: false,
+    });
+
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+
+    // Toggle Status
+    if (task.status === "Completed") {
+      task.status = "Pending";
+    } else {
+      task.status = "Completed";
+    }
+
+    await task.save();
+
+    await clearTaskCache(req.user._id);
+
+    await Notification.create({
+  user: req.user._id,
+  title: "Task Completed",
+  message: `"${task.title}" has been marked as completed.`,
+  type: "task_completed",
+});
+
+    return res.status(200).json({
+      success: true,
+      message:
+        task.status === "Completed"
+          ? "Task marked as completed."
+          : "Task marked as pending.",
+      task,
+    });
+
+  } catch (error) {
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+
+  }
+};
+
 const restoreTask = async (req, res) => {
   try {
 
@@ -340,6 +485,13 @@ const restoreTask = async (req, res) => {
     task.isDeleted = false;
 
     await task.save();
+
+    await Notification.create({
+  user: req.user._id,
+  title: "Task Restored",
+  message: `"${task.title}" has been restored successfully.`,
+  type: "task_restored",
+});
 
     return res.status(200).json({
       success: true,
@@ -364,5 +516,7 @@ updateTask,
 deleteTask,
 getDeletedTasks,
 restoreTask,
+getDashboard,
+completeTask,
 
 };

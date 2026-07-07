@@ -4,10 +4,13 @@ const redisClient = require("../config/redis_config.js");
 const { generateAccessToken,  generateRefreshToken } = require("../utils/generate_token.js")
 const sendEmail  = require("../utils/sendEmail.js")
 const emailQueue = require("../queue/register-email-q.js")
+const jwt = require("jsonwebtoken");
+const Notification = require("../models/notification_model.js")
 
     const register = async (req, res) => {
     try {
     const { name, email, password } = req.body;
+    console.log(name, email, password)
     const existingUser = await User.findOne({ email });
     if (existingUser) {
     return res.status(400).json({
@@ -52,6 +55,7 @@ await emailQueue.add(
         },
     }
 );
+   
 
     res.status(200).json({
     success: true,
@@ -92,6 +96,16 @@ await emailQueue.add(
 
 
      const accessToken = generateAccessToken(user._id);
+
+
+        await Notification.create({
+  user: user._id,
+  title: "Registration Successful",
+  message: "Welcome to TaskFlow! Your account has been created successfully.",
+  type: "register",
+});
+
+
 const refreshToken = generateRefreshToken(user._id);
 user.refreshToken = refreshToken;
 await user.save();

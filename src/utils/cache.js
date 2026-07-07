@@ -1,11 +1,13 @@
-const { RedisClient } = require("../config/redis_config.js");
+const  RedisClient = require("../config/redis_config.js");
 
 const clearTaskCache = async (userId) => {
   try {
     const keys = await RedisClient.keys(`tasks:${userId}:*`);
 
 
-      await RedisClient.del(keys);
+      if (keys.length > 0) {
+    await RedisClient.del(...keys);
+}
 
 
     console.log("✅ Task cache cleared");

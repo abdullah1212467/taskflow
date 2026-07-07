@@ -1,0 +1,201 @@
+.trash-page{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+
+/* Header */
+
+.trash-header h1{
+    color:#fff;
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.trash-header p{
+    color:#94a3b8;
+}
+
+/* Toolbar */
+
+.trash-toolbar{
+    display:flex;
+}
+
+.trash-search{
+    width:100%;
+    max-width:450px;
+    height:54px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:0 18px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:15px;
+}
+
+.trash-search svg{
+    color:#94a3b8;
+}
+
+.trash-search input{
+    flex:1;
+    border:none;
+    outline:none;
+    background:none;
+    color:#fff;
+    font-size:15px;
+}
+
+.trash-search input::placeholder{
+    color:#64748b;
+}
+
+/* Grid */
+
+.trash-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+    gap:25px;
+}
+
+/* Card */
+
+.trash-card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+    border-radius:22px;
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    transition:.3s;
+}
+
+.trash-card:hover{
+    transform:translateY(-5px);
+    border-color:#4f46e5;
+}
+
+/* Top */
+
+.trash-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.trash-top h2{
+    color:#fff;
+    font-size:20px;
+}
+
+/* Description */
+
+.trash-description{
+    color:#94a3b8;
+    line-height:1.7;
+}
+
+/* Priority */
+
+.priority{
+    padding:7px 14px;
+    border-radius:25px;
+    color:#fff;
+    font-size:13px;
+    font-weight:600;
+}
+
+.priority.high{
+    background:#ef4444;
+}
+
+.priority.medium{
+    background:#f59e0b;
+}
+
+.priority.low{
+    background:#22c55e;
+}
+
+/* Date */
+
+.trash-date{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#94a3b8;
+    font-size:14px;
+}
+
+.trash-date svg{
+    color:#38bdf8;
+}
+
+/* Buttons */
+
+.trash-actions{
+    display:flex;
+    gap:15px;
+}
+
+.restore-btn,
+.delete-btn{
+    flex:1;
+    height:48px;
+    border:none;
+    border-radius:14px;
+    color:#fff;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    transition:.3s;
+}
+
+.restore-btn{
+    background:#16a34a;
+}
+
+.restore-btn:hover{
+    background:#15803d;
+}
+
+.delete-btn{
+    background:#dc2626;
+}
+
+.delete-btn:hover{
+    background:#b91c1c;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.trash-grid{
+    grid-template-columns:1fr;
+}
+
+.trash-actions{
+    flex-direction:column;
+}
+
+}
+
+@media(max-width:500px){
+
+.trash-top{
+    flex-direction:column;
+}
+
+.trash-header h1{
+    font-size:28px;
+}
+
+}
