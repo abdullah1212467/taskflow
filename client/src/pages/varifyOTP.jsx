@@ -91,7 +91,7 @@ function VerifyOtp() {
       setLoading(true);
 
       const { data } = await axios.post(
-        "/api/auth/verify-email",
+        "http://100.58.219.37:5000/api/auth/verify-email",
         {
           email,
           otp,

@@ -62,7 +62,7 @@ function ResetPassword() {
       console.log("Reset Password Payload:", payload);
 
       const { data } = await axios.post(
-        "/api/auth/reset-password",
+        "http://100.58.219.37:5000/api/auth/reset-password",
         payload,
         {
           withCredentials: true,

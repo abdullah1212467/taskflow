@@ -41,7 +41,7 @@ function Login() {
       setLoading(true);
 
       const { data } = await axios.post(
-        "/api/auth/login",
+        "http://100.58.219.37:5000/api/auth/login",
         formData,
         {
           withCredentials: true,
